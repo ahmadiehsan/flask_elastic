@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.views.generic import TemplateView
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAdminUser
 from rest_framework.viewsets import ModelViewSet
 
 from .forms import CurrentStatusForm
@@ -74,8 +74,6 @@ class ReportsView(LoginRequiredMixin, TemplateView):
 
 
 class ExamViewSet(ModelViewSet):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAdminUser,)
     serializer_class = ExamSerializer
-
-    def get_queryset(self):
-        return Exam.objects.filter(user=self.request.user)
+    queryset = Exam.objects.all()

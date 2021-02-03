@@ -1,8 +1,13 @@
 import json
 
+from django.contrib.auth import get_user_model
+from django.utils.translation import ugettext as _
 from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
 
 from .models import Exam
+
+User = get_user_model()
 
 
 class CustomJsonField(serializers.Field):
@@ -10,13 +15,36 @@ class CustomJsonField(serializers.Field):
         return json.loads(value)
 
     def to_internal_value(self, value):
-        return value
+        if self._is_json(value):
+            return value
+        else:
+            return json.dumps(value)
+
+    @staticmethod
+    def _is_json(value):
+        try:
+            json.loads(value)
+            return True
+        except TypeError as e:
+            return False
 
 
 class ExamSerializer(serializers.ModelSerializer):
     result = CustomJsonField()
     translated_type = serializers.CharField(source='get_type_display', read_only=True)
+    user_id = serializers.PrimaryKeyRelatedField(
+        source='user',
+        queryset=User.objects.all(),
+        write_only=True
+    )
+
+    def validate_user_id(self, user_instance):
+        if Exam.objects.filter(user=user_instance, type=Exam.Type.current_status).exists():
+            raise ValidationError(_('The user has already taken the test'))
+
+        return user_instance
 
     class Meta:
         model = Exam
-        fields = ('id', 'type', 'translated_type', 'user', 'result')
+        fields = ('id', 'type', 'translated_type', 'user_id', 'user', 'result')
+        read_only_fields = ('user',)
