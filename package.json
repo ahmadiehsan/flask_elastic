@@ -1,0 +1,23 @@
+{
+  "name": "keep-up",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.2",
+    "bootstrap": "^5.0.0-beta1",
+    "chart.js": "^2.9.4",
+    "jquery": "^3.5.1",
+    "sweetalert2": "^10.14.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://mgit.mparsict.com/ahmadiehsan/keep-up.git"
+  },
+  "author": "ehsan ahmadi",
+  "license": "ISC"
+}
