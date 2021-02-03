@@ -2,7 +2,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
 
-from apps.exam.models import Exam
+from .models import Exam
 
 
 class CurrentStatusForm(forms.Form):
