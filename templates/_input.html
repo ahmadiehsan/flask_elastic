@@ -1,0 +1,10 @@
+{% load widget_tweaks %}
+
+<div class="row mb-3">
+    {{ field|add_label_class:'col-sm-2 col-form-label' }}
+    <div class="col-sm-10">
+        {{ field|add_class:'form-control'|add_error_class:'is-invalid' }}
+        {% if field.help_text %}<div class="form-text">{{ field.help_text }}</div>{% endif %}
+        {{ field.errors }}
+    </div>
+</div>

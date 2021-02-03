@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}How To Use{% endblock %}
+
+{% block content %}
+    <div class="container" id="content-element" style="display: none">
+        <div class="row">
+            <div class="col-lg-5">
+                <img class="w-100" src="{% static 'images/how_to_use.jpg' %}" alt="How to Use">
+            </div>
+            <div class="col-lg-7">
+                <div class="bg-light p-4">
+                    <h4 class="text-danger fw-bold">
+                        Preventing is much easier!
+                    </h4>
+                    <p>
+                        Scientific research has proven that the most feared disease. dementia can be prevented and
+                        postponed via effective brain stimulation techniques.
+                    </p>
+                    <h4 class="text-danger fw-bold">
+                        Forget medicine...just play!
+                    </h4>
+                    <p>
+                        We always think of medicine and exercises prescribed by our MD as a necessary burden. Here you
+                        can just enjoy your medicine.
+                    </p>
+                    <h4 class="text-danger fw-bold">
+                        Keep up the great normal life!
+                    </h4>
+                    <p>
+                        When thinking of what makes us happy as middle aged adults nothing comes before keeping up with
+                        our normal lives. This platform is an opportunity to assist you doing so.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="text-end pt-3">
+            <a id="home-page-url" class="btn btn-danger">Skip</a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script>
+        var homePageUrl = '{% url 'core:home' %}';
+        var localStorageKey = 'show-how-to-use';
+
+        if (localStorage.getItem(localStorageKey) === 'false') {
+            window.location.href = homePageUrl;
+        } else {
+            $('#content-element').show();
+        }
+
+        $('#home-page-url').click(function () {
+            localStorage.setItem(localStorageKey, 'false');
+            window.location.href = homePageUrl;
+        })
+    </script>
+{% endblock %}

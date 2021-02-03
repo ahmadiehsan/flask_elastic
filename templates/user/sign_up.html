@@ -1,0 +1,69 @@
+{% extends 'user/auth_base.html' %}
+{% load static widget_tweaks %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block tab_content %}
+    <form method="post" action="{% url 'user:sign-up' %}">
+        {{ form.non_field_errors }}
+        {% csrf_token %}
+
+        {% for field in form %}
+            {% include '_input.html' with field=field %}
+        {% endfor %}
+
+        {% comment %}<div class="row mb-3">
+                <label for="sign-up-birth-date" class="col-sm-2 col-form-label">Birth Date</label>
+                <div class="col-sm-10">
+                    <input type="date" class="form-control" id="sign-up-birth-date" required>
+                </div>
+            </div>
+
+            <fieldset class="row mb-3">
+                <legend class="col-form-label col-sm-2 pt-0">Gender</legend>
+                <div class="col-sm-10">
+                    <div class="form-check">
+                        <input
+                                class="form-check-input"
+                                type="radio"
+                                name="gender"
+                                id="sign-up-gender-female"
+                                value="female"
+                                required
+                        >
+                        <label class="form-check-label" for="sign-up-gender-female">
+                            Female
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input
+                                class="form-check-input"
+                                type="radio"
+                                name="gender"
+                                id="sign-up-gender-male"
+                                value="male"
+                                required
+                        >
+                        <label class="form-check-label" for="sign-up-gender-male">
+                            Male
+                        </label>
+                    </div>
+                    <div class="form-check disabled">
+                        <input
+                                class="form-check-input"
+                                type="radio"
+                                name="gender"
+                                id="sign-up-gender-non-binary"
+                                value="non_binary"
+                                required
+                        >
+                        <label class="form-check-label" for="sign-up-gender-non-binary">
+                            Non-Binary
+                        </label>
+                    </div>
+                </div>
+            </fieldset>{% endcomment %}
+        <p>By signing up, you agree to our Terms of Services</p>
+        <button type="submit" class="btn btn-danger">Sign Up</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="home-items row row-cols-1 row-cols-md-3 g-4">
+            <div class="col">
+                <div class="card">
+                    <div class="card-img-top">
+                        <img src="{% static 'images/home_one.jpg' %}" alt="Home One" width="200">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title text-danger fw-bold">Test Yourself</h5>
+                        <p class="card-text">
+                            Before getting started we need to evaluate your current status. It will not take more than a
+                            few
+                            minutes.
+                        </p>
+                        <a href="{% url 'exam:current-status' %}" class="btn btn-danger">Start Test</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card">
+                    <div class="card-img-top">
+                        <img src="{% static 'images/home_two.jpg' %}" alt="Home Two" width="200">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title text-danger fw-bold">Brain Exercise</h5>
+                        <p class="card-text">
+                            You can start playing right away. You will be on the street finding your way being aided at
+                            every junction with images of the same location from another view.
+                        </p>
+                        <a href="#" class="btn btn-danger">Play Now!</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card">
+                    <div class="card-img-top">
+                        <img src="{% static 'images/home_three.jpg' %}" alt="Home Three" width="200">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title text-danger fw-bold">Track Progress</h5>
+                        <p class="card-text">
+                            You can access your test results as well as your improvement reports here and compare
+                            yourself
+                            with other users.
+                        </p>
+                        <a href="{% url 'exam:reports' %}" class="btn btn-danger">Reports</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

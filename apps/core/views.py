@@ -1,0 +1,10 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import TemplateView
+
+
+class HomeView(LoginRequiredMixin, TemplateView):
+    template_name = 'core/home.html'
+
+
+class HowToUse(LoginRequiredMixin, TemplateView):
+    template_name = 'core/how-to-use.html'

@@ -1,0 +1,185 @@
+{% extends 'base.html' %}
+{% load static widget_tweaks %}
+
+{% block title %}Current status exam{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'sweetalert2/dist/sweetalert2.min.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <form method="post" action="{% url 'exam:current-status' %}">
+            <div class="card">
+                <div class="card-body">
+                    {{ form.non_field_errors }}
+                    {% csrf_token %}
+
+                    <p class="fs-5">{{ form.one|add_label_class:'form-label' }}</p>
+                    {{ form.one.errors }}
+                    <div class="row">
+                        <div class="col text-center">
+                            <label for="one-1">
+                                <img src="{% static 'images/tests/one/lock.jpg' %}" width="110">
+                                <div class="pt-3">
+                                    <input
+                                            class="form-check-input"
+                                            type="radio"
+                                            name="one"
+                                            id="one-1"
+                                            value="1"
+                                            required
+                                    >
+                                </div>
+                            </label>
+                        </div>
+                        <div class="col text-center">
+                            <label for="one-2">
+                                <img src="{% static 'images/tests/one/code.jpg' %}" width="110">
+                                <div class="pt-3">
+                                    <input
+                                            class="form-check-input"
+                                            type="radio"
+                                            name="one"
+                                            id="one-2"
+                                            value="2"
+                                            required
+                                    >
+                                </div>
+                            </label>
+                        </div>
+                        <div class="col text-center">
+                            <label for="one-3">
+                                <img src="{% static 'images/tests/one/galaxy_themes.png' %}" width="110">
+                                <div class="pt-3">
+                                    <input
+                                            class="form-check-input"
+                                            type="radio"
+                                            name="one"
+                                            id="one-3"
+                                            value="3"
+                                            required
+                                    >
+                                </div>
+                            </label>
+                        </div>
+                        <div class="col text-center">
+                            <label for="one-4">
+                                <img src="{% static 'images/tests/one/module.png' %}" width="110">
+                                <div class="pt-3">
+                                    <input
+                                            class="form-check-input"
+                                            type="radio"
+                                            name="one"
+                                            id="one-4"
+                                            value="4"
+                                            required
+                                    >
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <p class="fs-5">{{ form.two|add_label_class:'form-label' }}</p>
+                    {{ form.two.errors }}
+                    <div class="row">
+                        <div class="col text-center">
+                            <label for="two-1">
+                                <img src="{% static 'images/tests/one/lock.jpg' %}" width="110">
+                                <div class="pt-3">
+                                    <input
+                                            class="form-check-input"
+                                            type="radio"
+                                            name="two"
+                                            id="two-1"
+                                            value="1"
+                                            required
+                                    >
+                                </div>
+                            </label>
+                        </div>
+                        <div class="col text-center">
+                            <label for="two-2">
+                                <img src="{% static 'images/tests/one/code.jpg' %}" width="110">
+                                <div class="pt-3">
+                                    <input
+                                            class="form-check-input"
+                                            type="radio"
+                                            name="two"
+                                            id="two-2"
+                                            value="2"
+                                            required
+                                    >
+                                </div>
+                            </label>
+                        </div>
+                        <div class="col text-center">
+                            <label for="two-3">
+                                <img src="{% static 'images/tests/one/galaxy_themes.png' %}" width="110">
+                                <div class="pt-3">
+                                    <input
+                                            class="form-check-input"
+                                            type="radio"
+                                            name="two"
+                                            id="two-3"
+                                            value="3"
+                                            required
+                                    >
+                                </div>
+                            </label>
+                        </div>
+                        <div class="col text-center">
+                            <label for="two-4">
+                                <img src="{% static 'images/tests/one/module.png' %}" width="110">
+                                <div class="pt-3">
+                                    <input
+                                            class="form-check-input"
+                                            type="radio"
+                                            name="two"
+                                            id="two-4"
+                                            value="4"
+                                            required
+                                    >
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="d-flex mt-4">
+                <a href="{% url 'core:home' %}" class="btn btn-danger">Back</a>
+                <button type="submit" class="btn btn-success ms-auto">Submit</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'sweetalert2/dist/sweetalert2.min.js' %}"></script>
+    <script>
+        var homePageUrl = '{% url 'core:home' %}';
+
+        if ('{{ success }}' === 'true') {
+            Swal.fire(
+                'Good job!',
+                'Final point: {{ result.final_point }}',
+                'success'
+            ).then(function (e) {
+                window.location.href = homePageUrl;
+            });
+        }
+
+        if ('{{ already_taken }}' === 'true') {
+            Swal.fire(
+                'You already taken the exam',
+                'Final point: {{ result.final_point }}',
+                'info'
+            ).then(function (e) {
+                window.location.href = homePageUrl;
+            });
+        }
+    </script>
+{% endblock %}
