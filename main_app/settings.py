@@ -151,10 +151,10 @@ LANGUAGE_COOKIE_NAME = 'keep_up_language'
 
 # auth
 AUTH_USER_MODEL = 'user.User'
-LOGIN_URL = '/user/sign-in/'
+LOGIN_URL = '/users/sign-in/'
 LOGIN_REDIRECT_URL = '/how-to-use/'
-LOGOUT_URL = '/user/sign-out/'
-LOGOUT_REDIRECT_URL = '/user/sign-in/'
+LOGOUT_URL = '/users/sign-out/'
+LOGOUT_REDIRECT_URL = '/users/sign-in/'
 
 # messages
 MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'

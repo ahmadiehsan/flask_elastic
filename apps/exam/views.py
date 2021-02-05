@@ -7,59 +7,47 @@ from django.views.generic import TemplateView
 from rest_framework.permissions import IsAdminUser
 from rest_framework.viewsets import ModelViewSet
 
-from .forms import CurrentStatusForm
+from .forms import OrientationForm
 from .models import Exam
 from .serializers import ExamSerializer
 
 
 @login_required
-def current_status_view(request):
+def orientation_view(request):
     user = request.user
-    form = CurrentStatusForm(user=user)
+    form = OrientationForm()
     success = 'false'
     already_taken = 'false'
     result = {}
 
-    try:
-        exam = Exam.objects.get(user=user, type=Exam.Type.current_status)
+    previous_exams = Exam.objects.filter(user=user, type=Exam.Type.orientation)
+    if previous_exams.count() > 0:
         already_taken = 'true'
-        result = json.loads(exam.result)
-    except:
-        pass
 
     if request.method == 'POST':
-        form = CurrentStatusForm(user=user, data=request.POST)
+        form = OrientationForm(data=request.POST)
         if form.is_valid():
             final_point = 0
-            questions = {
-                'one': {
-                    'answer': '1',
-                    'point': 2
-                },
-                'two': {
-                    'answer': '2',
-                    'point': 2
-                }
-            }
-            for q, a in form.cleaned_data.items():
-                question = questions[q]
-                if question['answer'] == a:
-                    final_point += question['point']
+            for _, a in form.cleaned_data.items():
+                final_point += int(a)
 
             try:
+                result = {
+                    'q_a': form.cleaned_data,
+                    'final_point': final_point
+                }
                 Exam.objects.create(
                     user=user,
-                    type=Exam.Type.current_status,
-                    result=json.dumps({'final_point': final_point})
+                    type=Exam.Type.orientation,
+                    result=json.dumps(result)
                 )
                 success = 'true'
-                result = {'final_point': final_point}
             except:
                 pass
 
     return render(
         request,
-        'exam/current_status.html',
+        'exam/orientation.html',
         {
             'form': form,
             'success': success,

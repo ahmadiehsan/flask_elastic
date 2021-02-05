@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static widget_tweaks %}
 
-{% block title %}Current status exam{% endblock %}
+{% block title %}Orientation test{% endblock %}
 
 {% block css %}
     <link rel="stylesheet" href="{% static 'sweetalert2/dist/sweetalert2.min.css' %}">
@@ -9,7 +9,7 @@
 
 {% block content %}
     <div class="container">
-        <form method="post" action="{% url 'exam:current-status' %}">
+        <form method="post" action="{% url 'exam:orientation' %}">
             <div class="card">
                 <div class="card-body">
                     {{ form.non_field_errors }}

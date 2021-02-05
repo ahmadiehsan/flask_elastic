@@ -12,8 +12,18 @@ class SingUpForm(forms.ModelForm):
     first_name = forms.CharField(required=True)
     last_name = forms.CharField(required=True)
     password = forms.CharField(widget=forms.PasswordInput())
+    confirm_password = forms.CharField(widget=forms.PasswordInput(), help_text=_('Please enter the password again'))
     email = forms.EmailField(required=True)
     birthdate = forms.DateField(required=True, widget=DateInput())
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data['password']
+        confirm_password = cleaned_data['confirm_password']
+        if password != confirm_password:
+            raise ValidationError(_('Password fields are not equal'))
+
+        return cleaned_data
 
     class Meta:
         model = User
@@ -23,6 +33,7 @@ class SingUpForm(forms.ModelForm):
             'last_name',
             'email',
             'password',
+            'confirm_password',
             'birthdate',
             'gender',
         )

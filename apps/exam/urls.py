@@ -1,13 +1,13 @@
 from django.urls import path
 
 from main_app.urls import API_V1
-from .views import ReportsView, current_status_view, ExamViewSet
+from .views import ReportsView, orientation_view, ExamViewSet
 
 app_name = 'exam'
 
 urlpatterns = [
     path('reports/', ReportsView.as_view(), name='reports'),
-    path('current-status/', current_status_view, name='current-status'),
+    path('orientation/', orientation_view, name='orientation'),
 ]
 
 API_V1.register(

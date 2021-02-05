@@ -6,9 +6,9 @@ from djchoices import ChoiceItem, DjangoChoices
 
 class User(AbstractUser):
     class Gender(DjangoChoices):
-        male = ChoiceItem('1', _('Male'))
-        female = ChoiceItem('2', _('Female'))
-        non_binary = ChoiceItem('3', _('Non-Binary'))
+        male = ChoiceItem('m', _('Male'))
+        female = ChoiceItem('f', _('Female'))
+        non_binary = ChoiceItem('n', _('Non-Binary'))
 
     email = models.EmailField(
         _('Email Address'),

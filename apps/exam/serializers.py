@@ -38,12 +38,6 @@ class ExamSerializer(serializers.ModelSerializer):
         write_only=True
     )
 
-    def validate_user_id(self, user_instance):
-        if Exam.objects.filter(user=user_instance, type=Exam.Type.current_status).exists():
-            raise ValidationError(_('The user has already taken the test'))
-
-        return user_instance
-
     class Meta:
         model = Exam
         fields = ('id', 'type', 'translated_type', 'user_id', 'user', 'result')

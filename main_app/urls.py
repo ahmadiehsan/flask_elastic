@@ -19,7 +19,7 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('', include('apps.core.urls')),
-    path('user/', include('apps.user.urls')),
+    path('users/', include('apps.user.urls')),
     path('exams/', include('apps.exam.urls')),
     path('admin/', admin.site.urls),
     path('api/v1/token/', obtain_auth_token, name='token'),
