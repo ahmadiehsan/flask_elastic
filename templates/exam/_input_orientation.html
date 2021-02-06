@@ -1,0 +1,76 @@
+{% load static widget_tweaks %}
+
+<p class="fs-5">{{ field|add_label_class:'form-label' }}</p>
+{{ field.errors }}
+<div class="pb-3">
+    <label>
+        <input
+                class="form-check-input"
+                type="radio"
+                name="{{ field.name }}"
+                value="1"
+                required
+        >
+        1 (strongly agree)
+    </label>
+    <label class="ps-3">
+        <input
+                class="form-check-input"
+                type="radio"
+                name="{{ field.name }}"
+                value="2"
+                required
+        >
+        2
+    </label>
+    <label class="ps-3">
+        <input
+                class="form-check-input"
+                type="radio"
+                name="{{ field.name }}"
+                value="3"
+                required
+        >
+        3
+    </label>
+    <label class="ps-3">
+        <input
+                class="form-check-input"
+                type="radio"
+                name="{{ field.name }}"
+                value="4"
+                required
+        >
+        4
+    </label>
+    <label class="ps-3">
+        <input
+                class="form-check-input"
+                type="radio"
+                name="{{ field.name }}"
+                value="5"
+                required
+        >
+        5
+    </label>
+    <label class="ps-3">
+        <input
+                class="form-check-input"
+                type="radio"
+                name="{{ field.name }}"
+                value="6"
+                required
+        >
+        6
+    </label>
+    <label class="ps-3">
+        <input
+                class="form-check-input"
+                type="radio"
+                name="{{ field.name }}"
+                value="7"
+                required
+        >
+        7 (strongly disagree)
+    </label>
+</div>

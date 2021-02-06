@@ -19,10 +19,13 @@ def orientation_view(request):
     success = 'false'
     already_taken = 'false'
     result = {}
+    previous_results = ''
 
     previous_exams = Exam.objects.filter(user=user, type=Exam.Type.orientation)
     if previous_exams.count() > 0:
         already_taken = 'true'
+        for exam in previous_exams:
+            previous_results += str(json.loads(exam.result)['final_point'])
 
     if request.method == 'POST':
         form = OrientationForm(data=request.POST)
@@ -52,7 +55,8 @@ def orientation_view(request):
             'form': form,
             'success': success,
             'result': result,
-            'already_taken': already_taken
+            'already_taken': already_taken,
+            'previous_results': previous_results,
         }
     )
 
