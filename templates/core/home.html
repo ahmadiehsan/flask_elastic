@@ -3,6 +3,10 @@
 
 {% block title %}Home{% endblock %}
 
+{% block css %}
+    <link rel="stylesheet" href="{% static 'sweetalert2/dist/sweetalert2.min.css' %}">
+{% endblock %}
+
 {% block content %}
     <div class="container">
         <div class="home-items row row-cols-1 row-cols-md-3 g-4">
@@ -18,12 +22,12 @@
                             few
                             minutes.
                         </p>
-                        <a href="{% url 'exam:orientation' %}" class="btn btn-danger">Start Test</a>
+                        <a href="{% url 'exam:all-exams' %}" class="btn btn-danger">All Tests</a>
                     </div>
                 </div>
             </div>
             <div class="col">
-                <div class="card">
+                <div class="card {% if not can_play_game %}low-opacity{% endif %}">
                     <div class="card-img-top">
                         <img src="{% static 'images/home_two.jpg' %}" alt="Home Two" width="200">
                     </div>
@@ -33,7 +37,17 @@
                             You can start playing right away. You will be on the street finding your way being aided at
                             every junction with images of the same location from another view.
                         </p>
-                        <a href="#" class="btn btn-danger">Play Now!</a>
+                        <a
+                                href="https://google.com/?user_id={{ user.id }}"
+                                class="btn btn-danger {% if not can_play_game %}disabled{% endif %}"
+                        >
+                            Play Now!
+                            {% if already_played_game %}
+                                <span class="badge rounded-pill bg-light text-dark">
+                                    tries: {{ game_tries }}
+                                </span>
+                            {% endif %}
+                        </a>
                     </div>
                 </div>
             </div>
@@ -55,4 +69,24 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'sweetalert2/dist/sweetalert2.min.js' %}"></script>
+    <script>
+        $('.low-opacity').click(function () {
+            Swal.fire({
+                title: 'Has prerequisites!',
+                text: 'First you need to pass the preliminary tests',
+                icon: 'info',
+                showDenyButton: true,
+                confirmButtonText: 'Show tests',
+                denyButtonText: 'Ok',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '{% url 'exam:all-exams' %}';
+                }
+            })
+        })
+    </script>
 {% endblock %}

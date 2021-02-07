@@ -12,8 +12,19 @@
         <form method="post" action="{% url 'exam:orientation' %}">
             <div class="card">
                 <div class="card-body">
+                    {% if already_taken %}
+                        <div class="alert alert-info">
+                            <p class="fs-4">Your previous results:</p>
+                            {{ previous_result_html|safe }}
+                        </div>
+                    {% endif %}
+
                     <p class="fs-5 pb-3">
-                        This questionnaire consists of several statements about your spatial and navigational abilities, preferences, and experiences. After each statement, you should circle a number to indicate your level of agreement with the statement. Circle "1 " if you strongly agree that the statement applies to you, "7" if you strongly disagree, or some number in between if your agreement is intermediate. Circle "4" if you neither agree nor disagree.
+                        This questionnaire consists of several statements about your spatial and navigational abilities,
+                        preferences, and experiences. After each statement, you should circle a number to indicate your
+                        level of agreement with the statement. Circle "1 " if you strongly agree that the statement
+                        applies to you, "7" if you strongly disagree, or some number in between if your agreement is
+                        intermediate. Circle "4" if you neither agree nor disagree.
                     </p>
                     <hr>
 
@@ -27,7 +38,7 @@
 
                     <div class="d-flex">
                         <button type="submit" class="btn btn-success">Submit</button>
-                        <a href="{% url 'core:home' %}" class="btn btn-danger ms-auto">Back</a>
+                        <a href="{% url 'exam:all-exams' %}" class="btn btn-danger ms-auto">Back</a>
                     </div>
                 </div>
             </div>
@@ -38,25 +49,13 @@
 {% block js %}
     <script src="{% static 'sweetalert2/dist/sweetalert2.min.js' %}"></script>
     <script>
-        var homePageUrl = '{% url 'core:home' %}';
-
         if ('{{ success }}' === 'true') {
             Swal.fire(
                 'Good job!',
-                'Final point: {{ result.final_point }}',
+                'Final point: {{ result.total }}',
                 'success'
             ).then(function (e) {
-                window.location.href = homePageUrl;
-            });
-        }
-
-        if ('{{ already_taken }}' === 'true') {
-            Swal.fire({
-                title: 'Your previous results',
-                html: '{{ previous_results }}',
-                icon: 'info'
-            }).then(function (e) {
-                window.location.href = homePageUrl;
+                window.location.href = '{% url 'exam:all-exams' %}';
             });
         }
     </script>

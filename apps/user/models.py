@@ -23,7 +23,7 @@ class User(AbstractUser):
     )
     gender = models.CharField(
         _('Gender'),
-        max_length=1,
+        max_length=2,
         choices=Gender.choices,
         null=True
     )

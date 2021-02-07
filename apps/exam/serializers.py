@@ -1,16 +1,14 @@
 import json
 
 from django.contrib.auth import get_user_model
-from django.utils.translation import ugettext as _
 from rest_framework import serializers
-from rest_framework.exceptions import ValidationError
 
 from .models import Exam
 
 User = get_user_model()
 
 
-class CustomJsonField(serializers.Field):
+class ExamResultField(serializers.Field):
     def to_representation(self, value):
         return json.loads(value)
 
@@ -30,7 +28,7 @@ class CustomJsonField(serializers.Field):
 
 
 class ExamSerializer(serializers.ModelSerializer):
-    result = CustomJsonField()
+    result = ExamResultField()
     translated_type = serializers.CharField(source='get_type_display', read_only=True)
     user_id = serializers.PrimaryKeyRelatedField(
         source='user',

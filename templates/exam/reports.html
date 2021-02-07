@@ -10,36 +10,53 @@
 
 {% block content %}
     <div class="container">
-        <div class="row row-cols-1 row-cols-md-3 g-5">
-            <div class="col">
-                <h3 class="pb-4">Skill</h3>
-                <div class="card">
-                    <div class="card-body">
-                        <h5>Skills you are good at:</h5>
-                        <ul>
-                            <li>one</li>
-                            <li>two</li>
-                        </ul>
-                        <hr>
-                        <h5>Skills you are good at:</h5>
-                        <ul>
-                            <li>one</li>
-                            <li>two</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+        <div class="row row-cols-1 row-cols-lg-3 g-5">
             <div class="col">
                 <h3 class="pb-4">Game Result</h3>
-                <canvas id="game-result-canvas" height="300"></canvas>
+                {% if game_speed.show %}
+                    <div class="card">
+                        <div class="card-body">
+                            <table class="table table-striped m-0">
+                                <tbody>
+                                <tr>
+                                    <th scope="row">Best score</th>
+                                    <td>{{ game_result.data.best_score }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Accuracy</th>
+                                    <td>{{ game_result.data.accuracy }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Best speed</th>
+                                    <td>{{ game_result.data.best_speed }}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                {% else %}
+                    <p>To display this chart, you need to play the game at least once</p>
+                {% endif %}
+            </div>
+            <div class="col">
+                <h3 class="pb-4">Game Speed</h3>
+                {% if game_speed.show %}
+                    <canvas id="game-speed-canvas" height="300"></canvas>
+                {% else %}
+                    <p>To display this chart, you need to play the game at least once</p>
+                {% endif %}
             </div>
             <div class="col">
                 <h3 class="pb-4">Performance</h3>
-                <canvas id="performance-canvas" height="300"></canvas>
+                {% if performance.show %}
+                    <canvas id="performance-canvas" height="300"></canvas>
+                {% else %}
+                    <p>To display this chart, you need to pass at least one of tests</p>
+                {% endif %}
             </div>
         </div>
         <div class="pt-3">
-            <a href="{% url 'core:home' %}" class="btn btn-danger">Home Page</a>
+            <a href="{% url 'core:home' %}" class="btn btn-danger">Back</a>
         </div>
     </div>
 {% endblock %}
@@ -47,32 +64,17 @@
 {% block js %}
     <script src="{% static 'chart.js/dist/Chart.bundle.min.js' %}"></script>
     <script>
-        // game result
-        var gameResultElement = document.getElementById('game-result-canvas').getContext('2d');
-        new Chart(gameResultElement, {
+        // game speed
+        var gameSpeedElement = document.getElementById('game-speed-canvas').getContext('2d');
+        new Chart(gameSpeedElement, {
             type: 'line',
             data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
                 datasets: [
                     {
-                        label: '# of Votes',
-                        data: [12, 19, 3, 5, 2, 3],
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(255, 159, 64, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255, 159, 64, 1)'
-                        ],
+                        label: 'game speed',
+                        data: {{ game_speed.data.speed_list }},
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
                         borderWidth: 1
                     }
                 ]
@@ -95,31 +97,26 @@
         new Chart(performanceElement, {
             type: 'radar',
             data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                labels: ['Visual memory', 'Working memory', 'Orientation', 'Perspective taking', 'Speed'],
                 datasets: [
                     {
-                        label: '# of Votes',
-                        data: [12, 19, 3, 5, 2, 3],
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)'
+                        data: [
+                            '{{ performance.data.visual_memory }}',
+                            '{{ performance.data.working_memory }}',
+                            '{{ performance.data.orientation }}',
+                            '{{ performance.data.perspective_taking }}',
+                            '{{ performance.data.speed }}'
                         ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)'
-                        ],
-                        borderWidth: 1
-                    },
-                    {
-                        label: '# of Votes Two',
-                        data: [15, 13, 8, 7, 0, 15],
-                        backgroundColor: [
-                            'rgba(54, 162, 235, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(54, 162, 235, 1)'
-                        ],
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
                         borderWidth: 1
                     }
                 ]
+            },
+            options: {
+                legend: {
+                    display: false
+                }
             }
         });
     </script>

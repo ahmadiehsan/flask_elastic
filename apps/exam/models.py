@@ -14,8 +14,9 @@ class Exam(BaseModel):
         working_memory = ChoiceItem('wm', _('Working memory'))
         orientation = ChoiceItem('o', _('Orientation'))
         perspective_taking = ChoiceItem('pt', _('Perspective taking'))
+        game = ChoiceItem('g', _('Game'))
 
-    type = models.CharField(max_length=50, choices=Type.choices, verbose_name=_('Type'))
+    type = models.CharField(max_length=10, choices=Type.choices, verbose_name=_('Type'))
     user = models.ForeignKey(User, verbose_name=_('User'), on_delete=models.CASCADE, related_name='exams')
     result = models.TextField(verbose_name=_('Result'))
 

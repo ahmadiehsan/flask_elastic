@@ -5,6 +5,11 @@
     justify-content: center;
 }
 
+.low-opacity {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
 /* LG */
 @media (min-width: 992px) {
     .main-navbar .nav-link {
