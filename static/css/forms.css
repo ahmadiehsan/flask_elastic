@@ -9,3 +9,8 @@
     background-color: #f8d7da;
     border-color: #f5c2c7;
 }
+
+.radio-control {
+    list-style-type: none;
+    padding: 0;
+}

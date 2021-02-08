@@ -4,7 +4,7 @@ from statistics import mean
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, View
 from rest_framework import mixins
 from rest_framework.permissions import IsAdminUser
 from rest_framework.viewsets import GenericViewSet
@@ -229,13 +229,22 @@ class ReportsView(LoginRequiredMixin, TemplateView):
         return {
             'show': show,
             'data': {
-                'visual_memory': visual_memory_result.get('memory_span', 0),
-                'working_memory': working_memory_result.get('memory_span', 0),
-                'orientation': orientation_result.get('total', 0),
-                'perspective_taking': perspective_taking_result.get('angle', 0),
-                'speed': speed
+                'visual_memory': self._percentage(visual_memory_result.get('memory_span', 0), 10),
+                'working_memory': self._percentage(working_memory_result.get('memory_span', 0), 10),
+                'orientation': self._percentage(orientation_result.get('total', 0), 105),
+                'perspective_taking': self._percentage(perspective_taking_result.get('angle', 0), 180),
+                'speed': self._percentage(speed, 1000),
             }
         }
+
+    @staticmethod
+    def _percentage(part, whole):
+        return 100 * (float(part) / float(whole))
+
+
+class IframeView(LoginRequiredMixin, View):
+    def get(self, request, link):
+        return render(request, 'exam/iframe.html', {'link': link})
 
 
 class ExamViewSet(
