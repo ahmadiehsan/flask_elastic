@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load custom %}
+
+{% block title %}Test{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <iframe
+                src="{{ link }}?user_id={{ user.id|encrypt }}"
+                frameborder="0"
+                width="100%"
+                height="700"
+        ></iframe>
+    </div>
+{% endblock %}

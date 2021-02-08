@@ -162,7 +162,8 @@ MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
 # django rest framework
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication'
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     ],
 
     # Use Django's standard `django.contrib.auth` permissions,
@@ -183,3 +184,6 @@ REST_FRAMEWORK = {
 SWAGGER_SETTINGS = {
     'LOGOUT_URL': LOGOUT_URL
 }
+
+# encryption
+ENCRYPTION_KEY = 'GkzL3XCeO8k-0c5BS-4Lp-eYTTb61HsOxEJp1f3hvVc='

@@ -12,63 +12,69 @@
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
             <div class="col">
                 <div class="card">
+                    {% if already_taken_visual_memory %}
+                        <img src="{% static 'images/passed.png' %}" class="position-absolute" alt="passed">
+                    {% endif %}
                     <img src="{% static 'images/game_one.jpg' %}" class="card-img-top" alt="Game Image">
                     <div class="card-body">
                         <h5 class="card-title text-danger fw-bold">
                             1) Visual memory
-                            {% if already_taken_visual_memory %}<span class="text-info">(Passed)</span>{% endif %}
                         </h5>
                         <p class="card-text">
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
                             labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud laborum
                         </p>
                         <a
-                                href="https://google.com/?user_id={{ user.id }}"
+                                href="{% url 'exam:iframe' link='https://keep-up.app/Game/index.html' %}"
                                 class="btn btn-danger"
                         >
                             Start Test
-                            {% if already_taken_visual_memory %}
-                                <span class="badge rounded-pill bg-light text-dark">
-                                    tries: {{ visual_memory_tries }}
-                                </span>
-                            {% endif %}
                         </a>
+                        {% if already_taken_visual_memory %}
+                            <span class="badge bg-light text-dark">
+                                tries: {{ visual_memory_tries }}
+                            </span>
+                        {% endif %}
                     </div>
                 </div>
             </div>
             <div class="col">
                 <div class="card {% if not already_taken_visual_memory %}low-opacity{% endif %}">
+                    {% if already_taken_working_memory %}
+                        <img src="{% static 'images/passed.png' %}" class="position-absolute" alt="passed">
+                    {% endif %}
                     <img src="{% static 'images/game_one.jpg' %}" class="card-img-top" alt="Game Image">
                     <div class="card-body">
                         <h5 class="card-title text-danger fw-bold">
                             2) Working memory
-                            {% if already_taken_working_memory %}<span class="text-info">(Passed)</span>{% endif %}
                         </h5>
                         <p class="card-text">
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
                             labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud laborum
                         </p>
                         <a
-                                href="https://google.com/?user_id={{ user.id }}"
+                                href="{% url 'exam:iframe' link='https://keep-up.app/Game/index.html' %}"
                                 class="btn btn-danger {% if not already_taken_visual_memory %}disabled{% endif %}"
                         >
                             Start Test
-                            {% if already_taken_working_memory %}
-                                <span class="badge rounded-pill bg-light text-dark">
-                                    tries: {{ working_memory_tries }}
-                                </span>
-                            {% endif %}
                         </a>
+                        {% if already_taken_working_memory %}
+                            <span class="badge bg-light text-dark">
+                                tries: {{ working_memory_tries }}
+                            </span>
+                        {% endif %}
                     </div>
                 </div>
             </div>
             <div class="col">
                 <div class="card {% if not already_taken_working_memory %}low-opacity{% endif %}">
+                    {% if already_taken_orientation %}
+                        <img src="{% static 'images/passed.png' %}" class="position-absolute" alt="passed">
+                    {% endif %}
                     <img src="{% static 'images/game_one.jpg' %}" class="card-img-top" alt="Game Image">
                     <div class="card-body">
                         <h5 class="card-title text-danger fw-bold">
                             3) Orientation
-                            {% if already_taken_orientation %}<span class="text-info">(Passed)</span>{% endif %}
                         </h5>
                         <p class="card-text">
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
@@ -79,38 +85,40 @@
                                 class="btn btn-danger {% if not already_taken_working_memory %}disabled{% endif %}"
                         >
                             Start Test
-                            {% if already_taken_orientation %}
-                                <span class="badge rounded-pill bg-light text-dark">
-                                    tries: {{ orientation_tries }}
-                                </span>
-                            {% endif %}
                         </a>
+                        {% if already_taken_orientation %}
+                            <span class="badge bg-light text-dark">
+                                tries: {{ orientation_tries }}
+                            </span>
+                        {% endif %}
                     </div>
                 </div>
             </div>
             <div class="col">
                 <div class="card {% if not already_taken_orientation %}low-opacity{% endif %}">
+                    {% if already_taken_perspective_taking %}
+                        <img src="{% static 'images/passed.png' %}" class="position-absolute" alt="passed">
+                    {% endif %}
                     <img src="{% static 'images/game_one.jpg' %}" class="card-img-top" alt="Game Image">
                     <div class="card-body">
                         <h5 class="card-title text-danger fw-bold">
                             4) Perspective taking
-                            {% if already_taken_perspective_taking %}<span class="text-info">(Passed)</span>{% endif %}
                         </h5>
                         <p class="card-text">
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
                             labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud laborum
                         </p>
                         <a
-                                href="https://google.com/?user_id={{ user.id }}"
+                                href="{% url 'exam:iframe' link='https://keep-up.app/Game/index.html' %}"
                                 class="btn btn-danger {% if not already_taken_orientation %}disabled{% endif %}"
                         >
                             Start Test
-                            {% if already_taken_perspective_taking %}
-                                <span class="badge rounded-pill bg-light text-dark">
-                                    tries: {{ perspective_taking_tries }}
-                                </span>
-                            {% endif %}
                         </a>
+                        {% if already_taken_perspective_taking %}
+                            <span class="badge bg-light text-dark">
+                                tries: {{ perspective_taking_tries }}
+                            </span>
+                        {% endif %}
                     </div>
                 </div>
             </div>

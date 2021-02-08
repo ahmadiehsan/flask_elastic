@@ -15,6 +15,7 @@ class SingUpForm(forms.ModelForm):
     confirm_password = forms.CharField(widget=forms.PasswordInput(), help_text=_('Please enter the password again'))
     email = forms.EmailField(required=True)
     birthdate = forms.DateField(required=True, widget=DateInput())
+    gender = forms.ChoiceField(choices=User.Gender.choices, widget=forms.RadioSelect)
 
     def clean(self):
         cleaned_data = super().clean()
@@ -63,6 +64,7 @@ class ProfileForm(forms.ModelForm):
     last_name = forms.CharField(required=True)
     email = forms.EmailField(required=True)
     birthdate = forms.DateField(required=True, widget=DateInput())
+    gender = forms.ChoiceField(choices=User.Gender.choices, widget=forms.RadioSelect)
 
     class Meta:
         model = User

@@ -38,16 +38,16 @@
                             every junction with images of the same location from another view.
                         </p>
                         <a
-                                href="https://google.com/?user_id={{ user.id }}"
+                                href="{% url 'exam:iframe' link='https://keep-up.app/Game/index.html' %}"
                                 class="btn btn-danger {% if not can_play_game %}disabled{% endif %}"
                         >
                             Play Now!
-                            {% if already_played_game %}
-                                <span class="badge rounded-pill bg-light text-dark">
-                                    tries: {{ game_tries }}
-                                </span>
-                            {% endif %}
                         </a>
+                        {% if already_played_game %}
+                            <span class="badge rounded-pill bg-light text-dark">
+                                tries: {{ game_tries }}
+                            </span>
+                        {% endif %}
                     </div>
                 </div>
             </div>
