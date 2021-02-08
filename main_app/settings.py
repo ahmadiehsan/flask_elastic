@@ -14,7 +14,7 @@ SECRET_KEY = '$og9=jb$_4ys6igtabz$je(52g3tl-kg$!b%g$f9^#a+=m^-!7'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 INSTALLED_APPS = [
