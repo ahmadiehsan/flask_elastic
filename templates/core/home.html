@@ -9,11 +9,11 @@
 
 {% block content %}
     <div class="container">
-        <div class="home-items row row-cols-1 row-cols-md-3 g-4">
-            <div class="col">
+        <div class="home-items row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            <div class="col d-flex align-items-stretch">
                 <div class="card">
-                    <div class="card-img-top">
-                        <img src="{% static 'images/home_one.jpg' %}" alt="Home One" width="200">
+                    <div class="card-img-top overflow-hidden">
+                        <img src="{% static 'images/home_one.jpg' %}" alt="Home One" width="270">
                     </div>
                     <div class="card-body">
                         <h5 class="card-title text-danger fw-bold">Test Yourself</h5>
@@ -22,14 +22,14 @@
                             few
                             minutes.
                         </p>
-                        <a href="{% url 'exam:all-exams' %}" class="btn btn-danger">All Tests</a>
+                        <a href="{% url 'exam:all-exams' %}" class="btn btn-danger">Start Test</a>
                     </div>
                 </div>
             </div>
-            <div class="col">
+            <div class="col d-flex align-items-stretch">
                 <div class="card {% if not can_play_game %}low-opacity{% endif %}">
-                    <div class="card-img-top">
-                        <img src="{% static 'images/home_two.jpg' %}" alt="Home Two" width="200">
+                    <div class="card-img-top overflow-hidden">
+                        <img src="{% static 'images/home_two.jpg' %}" alt="Home Two" width="270">
                     </div>
                     <div class="card-body">
                         <h5 class="card-title text-danger fw-bold">Brain Exercise</h5>
@@ -43,18 +43,13 @@
                         >
                             Play Now!
                         </a>
-                        {% if already_played_game %}
-                            <span class="badge rounded-pill bg-light text-dark">
-                                tries: {{ game_tries }}
-                            </span>
-                        {% endif %}
                     </div>
                 </div>
             </div>
-            <div class="col">
+            <div class="col d-flex align-items-stretch">
                 <div class="card">
-                    <div class="card-img-top">
-                        <img src="{% static 'images/home_three.jpg' %}" alt="Home Three" width="200">
+                    <div class="card-img-top overflow-hidden">
+                        <img src="{% static 'images/home_three.jpg' %}" alt="Home Three" width="270">
                     </div>
                     <div class="card-body">
                         <h5 class="card-title text-danger fw-bold">Track Progress</h5>

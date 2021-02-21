@@ -5,51 +5,53 @@
 
 {% block content %}
     <div class="container">
+        {% include '_messages.html' with messages=messages %}
+
         <div class="row">
-            <div class="col-lg-8 offset-lg-2">
-                {% include '_messages.html' with messages=messages %}
+            <div class="col-xl-8 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <form method="post" action="{% url 'user:profile' %}">
+                            {{ profile_form.non_field_errors }}
+                            {% csrf_token %}
 
-                <div class="row row-cols-1 g-5">
-                    <div class="col">
-                        <div class="card">
-                            <div class="card-body">
-                                <form method="post" action="{% url 'user:profile' %}">
-                                    {{ profile_form.non_field_errors }}
-                                    {% csrf_token %}
+                            {% for field in profile_form %}
+                                {% include '_input_horizontal.html' with field=field %}
+                            {% endfor %}
 
-                                    {% for field in profile_form %}
-                                        {% include '_input.html' with field=field %}
-                                    {% endfor %}
+                            <input type="hidden" name="form_type" value="profile">
 
-                                    <input type="hidden" name="form_type" value="profile">
-
-                                    <button type="submit" class="btn btn-danger">Save</button>
-                                </form>
-                            </div>
-                        </div>
+                            <button type="submit" class="btn btn-danger">Save</button>
+                        </form>
                     </div>
-                    <div class="col">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title text-danger">Change Password</h5>
+                </div>
+            </div>
+            <div class="col-xl-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title text-danger">Change Password</h5>
 
-                                <form method="post" action="{% url 'user:profile' %}">
-                                    {{ change_password_form.non_field_errors }}
-                                    {% csrf_token %}
+                        <form method="post" action="{% url 'user:profile' %}">
+                            {{ change_password_form.non_field_errors }}
+                            {% csrf_token %}
 
-                                    {% for field in change_password_form %}
-                                        {% include '_input.html' with field=field %}
-                                    {% endfor %}
+                            {% for field in change_password_form %}
+                                {% include '_input_vertical.html' with field=field %}
+                            {% endfor %}
 
-                                    <input type="hidden" name="form_type" value="change_password">
+                            <input type="hidden" name="form_type" value="change_password">
 
-                                    <button type="submit" class="btn btn-danger">Change</button>
-                                </form>
-                            </div>
-                        </div>
+                            <button type="submit" class="btn btn-danger">Change</button>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block js %}
+    <script>
+        id_birthdate.max = new Date().toISOString().split("T")[0];
+    </script>
 {% endblock %}

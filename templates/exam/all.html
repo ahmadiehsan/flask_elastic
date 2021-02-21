@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}All Tests{% endblock %}
+{% block title %}Test Yourself{% endblock %}
 
 {% block css %}
     <link rel="stylesheet" href="{% static 'sweetalert2/dist/sweetalert2.min.css' %}">
@@ -9,13 +9,15 @@
 
 {% block content %}
     <div class="container">
+        <h3 class="text-center">Let's begin your brain test</h3>
+        <hr>
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
-            <div class="col">
+            <div class="col d-flex align-items-stretch">
                 <div class="card">
                     {% if already_taken_visual_memory %}
                         <img src="{% static 'images/passed.png' %}" class="position-absolute" alt="passed">
                     {% endif %}
-                    <img src="{% static 'images/game_one.jpg' %}" class="card-img-top" alt="Game Image">
+                    <img src="{% static 'images/test_1.jpg' %}" class="card-img-top" alt="Game Image">
                     <div class="card-body">
                         <h5 class="card-title text-danger fw-bold">
                             1) Visual memory
@@ -30,20 +32,15 @@
                         >
                             Start Test
                         </a>
-                        {% if already_taken_visual_memory %}
-                            <span class="badge bg-light text-dark">
-                                tries: {{ visual_memory_tries }}
-                            </span>
-                        {% endif %}
                     </div>
                 </div>
             </div>
-            <div class="col">
+            <div class="col d-flex align-items-stretch">
                 <div class="card {% if not already_taken_visual_memory %}low-opacity{% endif %}">
                     {% if already_taken_working_memory %}
                         <img src="{% static 'images/passed.png' %}" class="position-absolute" alt="passed">
                     {% endif %}
-                    <img src="{% static 'images/game_one.jpg' %}" class="card-img-top" alt="Game Image">
+                    <img src="{% static 'images/test_2.jpg' %}" class="card-img-top" alt="Game Image">
                     <div class="card-body">
                         <h5 class="card-title text-danger fw-bold">
                             2) Working memory
@@ -58,20 +55,15 @@
                         >
                             Start Test
                         </a>
-                        {% if already_taken_working_memory %}
-                            <span class="badge bg-light text-dark">
-                                tries: {{ working_memory_tries }}
-                            </span>
-                        {% endif %}
                     </div>
                 </div>
             </div>
-            <div class="col">
+            <div class="col d-flex align-items-stretch">
                 <div class="card {% if not already_taken_working_memory %}low-opacity{% endif %}">
                     {% if already_taken_orientation %}
                         <img src="{% static 'images/passed.png' %}" class="position-absolute" alt="passed">
                     {% endif %}
-                    <img src="{% static 'images/game_one.jpg' %}" class="card-img-top" alt="Game Image">
+                    <img src="{% static 'images/test_3.jpg' %}" class="card-img-top" alt="Game Image">
                     <div class="card-body">
                         <h5 class="card-title text-danger fw-bold">
                             3) Orientation
@@ -86,20 +78,15 @@
                         >
                             Start Test
                         </a>
-                        {% if already_taken_orientation %}
-                            <span class="badge bg-light text-dark">
-                                tries: {{ orientation_tries }}
-                            </span>
-                        {% endif %}
                     </div>
                 </div>
             </div>
-            <div class="col">
+            <div class="col d-flex align-items-stretch">
                 <div class="card {% if not already_taken_orientation %}low-opacity{% endif %}">
                     {% if already_taken_perspective_taking %}
                         <img src="{% static 'images/passed.png' %}" class="position-absolute" alt="passed">
                     {% endif %}
-                    <img src="{% static 'images/game_one.jpg' %}" class="card-img-top" alt="Game Image">
+                    <img src="{% static 'images/test_4.jpg' %}" class="card-img-top" alt="Game Image">
                     <div class="card-body">
                         <h5 class="card-title text-danger fw-bold">
                             4) Perspective taking
@@ -114,18 +101,19 @@
                         >
                             Start Test
                         </a>
-                        {% if already_taken_perspective_taking %}
-                            <span class="badge bg-light text-dark">
-                                tries: {{ perspective_taking_tries }}
-                            </span>
-                        {% endif %}
                     </div>
                 </div>
             </div>
         </div>
-        <hr>
-        <h3 class="text-center">Let's begin your brain test</h3>
-        <a href="{% url 'core:home' %}" class="btn btn-danger">Back</a>
+
+        {% if already_taken_visual_memory and already_taken_working_memory and already_taken_orientation and already_taken_perspective_taking %}
+            <div class="alert alert-info mt-4">
+                To keep track of your advancement, play at least forty minutes per week within four consecutive week
+                ,and then repeat the tests.
+            </div>
+        {% endif %}
+
+        <a href="{% url 'core:home' %}" class="btn btn-danger mt-4">Back</a>
     </div>
 {% endblock %}
 

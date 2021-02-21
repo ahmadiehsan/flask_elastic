@@ -20,18 +20,15 @@ class HomeView(LoginRequiredMixin, TemplateView):
         ):
             can_play_game = True
 
-        already_played_game = False
-        game_tries = Exam.objects.filter(user=self.request.user, type=Exam.Type.game).count()
-        if game_tries > 0:
-            already_played_game = True
-
         context.update({
-            'can_play_game': can_play_game,
-            'already_played_game': already_played_game,
-            'game_tries': game_tries
+            'can_play_game': can_play_game
         })
         return context
 
 
-class HowToUse(LoginRequiredMixin, TemplateView):
+class HowToUseView(LoginRequiredMixin, TemplateView):
     template_name = 'core/how-to-use.html'
+
+
+class TermsAndConditionsView(TemplateView):
+    template_name = 'core/terms_and_conditions.html'

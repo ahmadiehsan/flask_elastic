@@ -10,6 +10,10 @@
     cursor: not-allowed;
 }
 
+.text-justify {
+    text-align: justify !important;
+}
+
 /* LG */
 @media (min-width: 992px) {
     .main-navbar .nav-link {

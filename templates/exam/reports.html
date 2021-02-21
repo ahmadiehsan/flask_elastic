@@ -2,7 +2,7 @@
 
 {% load static %}
 
-{% block title %}Reports{% endblock %}
+{% block title %}Dashboard{% endblock %}
 
 {% block css %}
     <link rel="stylesheet" href="{% static 'chart.js/dist/Chart.min.css' %}">
@@ -10,49 +10,103 @@
 
 {% block content %}
     <div class="container">
-        <div class="row row-cols-1 row-cols-lg-3 g-5">
-            <div class="col">
-                <h3 class="pb-4">Game Result</h3>
-                {% if game_speed.show %}
-                    <div class="card">
-                        <div class="card-body">
-                            <table class="table table-striped m-0">
-                                <tbody>
-                                <tr>
-                                    <th scope="row">Best score</th>
-                                    <td>{{ game_result.data.best_score }}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Accuracy</th>
-                                    <td>{{ game_result.data.accuracy }}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Best speed</th>
-                                    <td>{{ game_result.data.best_speed }}</td>
-                                </tr>
-                                </tbody>
-                            </table>
+        {% if not game_result.show and not game_speed.show and not weeks_percentage.show %}
+            <div class="alert alert-warning">
+                Play to see results
+            </div>
+        {% endif %}
+
+        {% if not detailed_progress.show %}
+            <div class="alert alert-warning">
+                Tests not done yet
+            </div>
+        {% endif %}
+
+        <div class="row">
+            <div class="col-lg-4 mb-4 d-flex align-items-stretch">
+                <div class="card w-100">
+                    <div class="card-body">
+                        <h5 class="card-title mb-4">Performance</h5>
+                        <canvas id="performance-canvas" height="300"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8 mb-4 d-flex align-items-stretch">
+                <div class="card w-100">
+                    <div class="card-body">
+                        <h5 class="card-title mb-4">Detailed Progress Report</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <canvas id="visual-memory-canvas" height="150"></canvas>
+                            </div>
+                            <div class="col-md-6">
+                                <canvas id="orientation-canvas" height="150"></canvas>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <canvas id="working-memory-canvas" height="150"></canvas>
+                            </div>
+                            <div class="col-md-6">
+                                <canvas id="speed-canvas" height="150"></canvas>
+                            </div>
                         </div>
                     </div>
-                {% else %}
-                    <p>To display this chart, you need to play the game at least once</p>
-                {% endif %}
+                </div>
             </div>
-            <div class="col">
-                <h3 class="pb-4">Game Speed</h3>
-                {% if game_speed.show %}
-                    <canvas id="game-speed-canvas" height="300"></canvas>
-                {% else %}
-                    <p>To display this chart, you need to play the game at least once</p>
-                {% endif %}
+        </div>
+        <div class="mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title mb-4">Weekly Progress</h5>
+                    <div class="row">
+                        <div class="col-md-6 col-lg-3">
+                            <canvas id="three-weeks-ago-canvas" height="150"></canvas>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <canvas id="two-weeks-ago-canvas" height="150"></canvas>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <canvas id="last-week-canvas" height="150"></canvas>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <canvas id="this-week-canvas" height="150"></canvas>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="col">
-                <h3 class="pb-4">Performance</h3>
-                {% if performance.show %}
-                    <canvas id="performance-canvas" height="300"></canvas>
-                {% else %}
-                    <p>To display this chart, you need to pass at least one of tests</p>
-                {% endif %}
+        </div>
+        <div class="row">
+            <div class="col-lg-5 mb-4 d-flex align-items-stretch">
+                <div class="card w-100">
+                    <div class="card-body">
+                        <h5 class="card-title mb-4">Your Best Record</h5>
+                        <table class="table table-striped m-0">
+                            <tbody>
+                            <tr>
+                                <th scope="row">Best score</th>
+                                <td>{{ game_result.data.best_score }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Accuracy</th>
+                                <td>{{ game_result.data.accuracy }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Best speed</th>
+                                <td>{{ game_result.data.best_speed }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-7 mb-4 d-flex align-items-stretch">
+                <div class="card w-100">
+                    <div class="card-body">
+                        <h5 class="card-title mb-4">Mental Agility</h5>
+                        <canvas id="game-speed-canvas" height="80"></canvas>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="pt-3">
@@ -64,37 +118,8 @@
 {% block js %}
     <script src="{% static 'chart.js/dist/Chart.bundle.min.js' %}"></script>
     <script>
-        // game speed
-        var gameSpeedElement = document.getElementById('game-speed-canvas').getContext('2d');
-        new Chart(gameSpeedElement, {
-            type: 'line',
-            data: {
-                datasets: [
-                    {
-                        label: 'game speed',
-                        data: {{ game_speed.data.speed_list }},
-                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                        borderColor: 'rgba(255, 99, 132, 1)',
-                        borderWidth: 1
-                    }
-                ]
-            },
-            options: {
-                scales: {
-                    yAxes: [
-                        {
-                            ticks: {
-                                beginAtZero: true
-                            }
-                        }
-                    ]
-                }
-            }
-        });
-
         // performance
-        var performanceElement = document.getElementById('performance-canvas').getContext('2d');
-        new Chart(performanceElement, {
+        new Chart(document.getElementById('performance-canvas').getContext('2d'), {
             type: 'radar',
             data: {
                 labels: ['Visual memory', 'Working memory', 'Orientation', 'Perspective taking', 'Speed'],
@@ -125,6 +150,244 @@
                     }
                 }
             }
+        });
+
+        // game speed
+        new Chart(document.getElementById('game-speed-canvas').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: {{ game_speed.data.date_list|safe }},
+                datasets: [
+                    {
+                        data: {{ game_speed.data.speed_list }},
+                        label: "game speed",
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        fill: false
+                    }
+                ]
+            },
+            options: {scales: {yAxes: [{ticks: {beginAtZero: true}}]}}
+        });
+
+        // visual memory
+        new Chart(document.getElementById('visual-memory-canvas').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: {{ detailed_progress.data.visual_memory.date_list|safe }},
+                datasets: [
+                    {
+                        data: {{ detailed_progress.data.visual_memory.memory_span_list }},
+                        label: "visual memory",
+                        backgroundColor: 'rgba(248, 206, 0, 0.2)',
+                        borderColor: 'rgb(248,206,0)',
+                        fill: false
+                    }
+                ]
+            },
+            options: {scales: {yAxes: [{ticks: {beginAtZero: true}}]}}
+        });
+
+        // orientation
+        new Chart(document.getElementById('orientation-canvas').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: {{ detailed_progress.data.orientation.date_list|safe }},
+                datasets: [
+                    {
+                        data: {{ detailed_progress.data.orientation.total_list }},
+                        label: "orientation",
+                        backgroundColor: 'rgba(246, 115, 0, 0.2)',
+                        borderColor: 'rgb(246,115,0)',
+                        fill: false
+                    }
+                ]
+            },
+            options: {scales: {yAxes: [{ticks: {beginAtZero: true}}]}}
+        });
+
+        // working memory
+        new Chart(document.getElementById('working-memory-canvas').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: {{ detailed_progress.data.working_memory.date_list|safe }},
+                datasets: [
+                    {
+                        data: {{ detailed_progress.data.working_memory.memory_span_list }},
+                        label: "working memory",
+                        backgroundColor: 'rgba(94, 177, 0, 0.2)',
+                        borderColor: 'rgb(94,177,0)',
+                        fill: false
+                    }
+                ]
+            },
+            options: {scales: {yAxes: [{ticks: {beginAtZero: true}}]}}
+        });
+
+        // speed
+        new Chart(document.getElementById('speed-canvas').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: {{ detailed_progress.data.speed.date_list|safe }},
+                datasets: [
+                    {
+                        data: {{ detailed_progress.data.speed.speed_list }},
+                        label: "speed",
+                        backgroundColor: 'rgba(99, 133, 255, 0.2)',
+                        borderColor: 'rgb(99,133,255)',
+                        fill: false
+                    }
+                ]
+            },
+            options: {scales: {yAxes: [{ticks: {beginAtZero: true}}]}}
+        });
+
+        // three weeks ago
+        new Chart(document.getElementById('three-weeks-ago-canvas').getContext('2d'), {
+            type: 'doughnut',
+            data: {
+                datasets: [{
+                    label: 'three weeks ago',
+                    percent: {{ weeks_percentage.data.three_weeks_ago_percentage }},
+                    backgroundColor: ['#00cfd5']
+                }]
+            },
+            plugins: [
+                {
+                    beforeInit: (chart) => {
+                        const dataset = chart.data.datasets[0];
+                        chart.data.labels = [dataset.label];
+                        dataset.data = dataset.percent >= 100 ? [100, 0] : [dataset.percent, 100 - dataset.percent];
+                    }
+                }, {
+                    beforeDraw: (chart) => {
+                        var width = chart.chart.width,
+                            height = chart.chart.height,
+                            ctx = chart.chart.ctx;
+                        ctx.restore();
+                        var fontSize = (height / 150).toFixed(2);
+                        ctx.font = fontSize + "em sans-serif";
+                        ctx.fillStyle = "#9b9b9b";
+                        ctx.textBaseline = "middle";
+                        var text = chart.data.datasets[0].percent + "%",
+                            textX = Math.round((width - ctx.measureText(text).width) / 2),
+                            textY = height / 1.65;
+                        ctx.fillText(text, textX, textY);
+                        ctx.save();
+                    }
+                }
+            ]
+        });
+
+        // two weeks ago
+        new Chart(document.getElementById('two-weeks-ago-canvas').getContext('2d'), {
+            type: 'doughnut',
+            data: {
+                datasets: [{
+                    label: 'two weeks ago',
+                    percent: {{ weeks_percentage.data.two_weeks_ago_percentage }},
+                    backgroundColor: ['#00cfd5']
+                }]
+            },
+            plugins: [
+                {
+                    beforeInit: (chart) => {
+                        const dataset = chart.data.datasets[0];
+                        chart.data.labels = [dataset.label];
+                        dataset.data = dataset.percent >= 100 ? [100, 0] : [dataset.percent, 100 - dataset.percent];
+                    }
+                }, {
+                    beforeDraw: (chart) => {
+                        var width = chart.chart.width,
+                            height = chart.chart.height,
+                            ctx = chart.chart.ctx;
+                        ctx.restore();
+                        var fontSize = (height / 150).toFixed(2);
+                        ctx.font = fontSize + "em sans-serif";
+                        ctx.fillStyle = "#9b9b9b";
+                        ctx.textBaseline = "middle";
+                        var text = chart.data.datasets[0].percent + "%",
+                            textX = Math.round((width - ctx.measureText(text).width) / 2),
+                            textY = height / 1.65;
+                        ctx.fillText(text, textX, textY);
+                        ctx.save();
+                    }
+                }
+            ]
+        });
+
+        // last week
+        new Chart(document.getElementById('last-week-canvas').getContext('2d'), {
+            type: 'doughnut',
+            data: {
+                datasets: [{
+                    label: 'last week',
+                    percent: {{ weeks_percentage.data.last_week_percentage }},
+                    backgroundColor: ['#00cfd5']
+                }]
+            },
+            plugins: [
+                {
+                    beforeInit: (chart) => {
+                        const dataset = chart.data.datasets[0];
+                        chart.data.labels = [dataset.label];
+                        dataset.data = dataset.percent >= 100 ? [100, 0] : [dataset.percent, 100 - dataset.percent];
+                    }
+                }, {
+                    beforeDraw: (chart) => {
+                        var width = chart.chart.width,
+                            height = chart.chart.height,
+                            ctx = chart.chart.ctx;
+                        ctx.restore();
+                        var fontSize = (height / 150).toFixed(2);
+                        ctx.font = fontSize + "em sans-serif";
+                        ctx.fillStyle = "#9b9b9b";
+                        ctx.textBaseline = "middle";
+                        var text = chart.data.datasets[0].percent + "%",
+                            textX = Math.round((width - ctx.measureText(text).width) / 2),
+                            textY = height / 1.65;
+                        ctx.fillText(text, textX, textY);
+                        ctx.save();
+                    }
+                }
+            ]
+        });
+
+        // this week
+        new Chart(document.getElementById('this-week-canvas').getContext('2d'), {
+            type: 'doughnut',
+            data: {
+                datasets: [{
+                    label: 'this week',
+                    percent: {{ weeks_percentage.data.this_week_percentage }},
+                    backgroundColor: ['#00cfd5']
+                }]
+            },
+            plugins: [
+                {
+                    beforeInit: (chart) => {
+                        const dataset = chart.data.datasets[0];
+                        chart.data.labels = [dataset.label];
+                        dataset.data = dataset.percent >= 100 ? [100, 0] : [dataset.percent, 100 - dataset.percent];
+                    }
+                }, {
+                    beforeDraw: (chart) => {
+                        var width = chart.chart.width,
+                            height = chart.chart.height,
+                            ctx = chart.chart.ctx;
+                        ctx.restore();
+                        var fontSize = (height / 150).toFixed(2);
+                        ctx.font = fontSize + "em sans-serif";
+                        ctx.fillStyle = "#9b9b9b";
+                        ctx.textBaseline = "middle";
+                        var text = chart.data.datasets[0].percent + "%",
+                            textX = Math.round((width - ctx.measureText(text).width) / 2),
+                            textY = height / 1.65;
+                        ctx.fillText(text, textX, textY);
+                        ctx.save();
+                    }
+                }
+            ]
         });
     </script>
 {% endblock %}

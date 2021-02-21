@@ -1,6 +1,10 @@
+{% load static %}
+
 <nav class="main-navbar navbar navbar-expand-lg navbar-light bg-light mb-5">
     <div class="container">
-        <a class="navbar-brand fs-2 text-danger" href="{% url 'core:home' %}">KeepUp</a>
+        <a class="navbar-brand" href="{% url 'core:home' %}">
+            <img class="py-1" src="{% static 'images/logo.png' %}" alt="logo">
+        </a>
         <button
                 class="navbar-toggler"
                 type="button"
@@ -17,8 +21,13 @@
                     </a>
                 </li>
                 {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'user:profile' %}">
+                    <li class="nav-item dropdown">
+                        <a
+                                class="nav-link dropdown-toggle"
+                                href="#"
+                                role="button"
+                                data-bs-toggle="dropdown"
+                        >
                             <i class="fa fa-user pe-1"></i>
                             {% if user.get_full_name %}
                                 {{ user.get_full_name }}
@@ -26,9 +35,10 @@
                                 {{ user.username }}
                             {% endif %}
                         </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'user:sign-out' %}">Sign Out</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'user:profile' %}">Profile</a></li>
+                            <li><a class="dropdown-item" href="{% url 'user:sign-out' %}">Sign Out</a></li>
+                        </ul>
                     </li>
                 {% endif %}
             </ul>
