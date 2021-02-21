@@ -17,11 +17,11 @@ class BaseModel(models.Model):
 
     @property
     def update_date_formatted(self):
-        return self.update_time.strftime("%b %d %Y")
+        return self.update_time.strftime("%b %d")
 
     @property
     def create_date_formatted(self):
-        return self.create_time.strftime("%b %d %Y")
+        return self.create_time.strftime("%b %d")
 
     class Meta:
         ordering = ('-update_time',)

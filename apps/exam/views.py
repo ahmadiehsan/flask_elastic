@@ -215,31 +215,31 @@ class ReportsView(LoginRequiredMixin, TemplateView):
                 visual_memory_result = json.loads(visual_memory.result)
 
                 speed_speed_list.append(visual_memory_result['speed'])
-                speed_date_list.append(visual_memory.create_time_formatted)
+                speed_date_list.append(visual_memory.create_date_formatted)
 
                 visual_memory_memory_span_list.append(visual_memory_result['memory_span'])
-                visual_memory_date_list.append(visual_memory.create_time_formatted)
+                visual_memory_date_list.append(visual_memory.create_date_formatted)
 
             for orientation in user.exams.filter(type=Exam.Type.orientation):
                 orientation_result = json.loads(orientation.result)
 
                 orientation_total_list.append(orientation_result['total'])
-                orientation_date_list.append(orientation.create_time_formatted)
+                orientation_date_list.append(orientation.create_date_formatted)
 
             for working_memory in user.exams.filter(type=Exam.Type.working_memory):
                 working_memory_result = json.loads(working_memory.result)
 
                 speed_speed_list.append(working_memory_result['speed'])
-                speed_date_list.append(working_memory.create_time_formatted)
+                speed_date_list.append(working_memory.create_date_formatted)
 
                 working_memory_memory_span_list.append(working_memory_result['memory_span'])
-                working_memory_date_list.append(working_memory.create_time_formatted)
+                working_memory_date_list.append(working_memory.create_date_formatted)
 
             for perspective_taking in user.exams.filter(type=Exam.Type.perspective_taking):
                 perspective_taking_result = json.loads(perspective_taking.result)
 
                 speed_speed_list.append(perspective_taking_result['speed'])
-                speed_date_list.append(perspective_taking.create_time_formatted)
+                speed_date_list.append(perspective_taking.create_date_formatted)
 
         return {
             'show': show,
@@ -313,7 +313,7 @@ class ReportsView(LoginRequiredMixin, TemplateView):
             for game in game_history:
                 game_result = json.loads(game.result)
                 speed_list.append(game_result['speed'])
-                date_list.append(game.create_time_formatted)
+                date_list.append(game.create_date_formatted)
 
         return {
             'show': show,
