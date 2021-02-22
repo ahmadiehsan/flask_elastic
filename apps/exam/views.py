@@ -333,32 +333,24 @@ class ReportsView(LoginRequiredMixin, TemplateView):
 
         speed_list = []
         if user.exams.exists():
-            try:
-                last_visual_memory = user.exams.filter(type=Exam.Type.visual_memory).last()
+            last_visual_memory = user.exams.filter(type=Exam.Type.visual_memory).last()
+            if last_visual_memory:
                 visual_memory_result = json.loads(last_visual_memory.result)
                 speed_list.append(visual_memory_result['speed'])
-            except Exam.DoesNotExist:
-                pass
 
-            try:
-                last_working_memory = user.exams.filter(type=Exam.Type.working_memory).last()
+            last_working_memory = user.exams.filter(type=Exam.Type.working_memory).last()
+            if last_working_memory:
                 working_memory_result = json.loads(last_working_memory.result)
                 speed_list.append(working_memory_result['speed'])
-            except Exam.DoesNotExist:
-                pass
 
-            try:
-                last_orientation = user.exams.filter(type=Exam.Type.orientation).last()
+            last_orientation = user.exams.filter(type=Exam.Type.orientation).last()
+            if last_orientation:
                 orientation_result = json.loads(last_orientation.result)
-            except Exam.DoesNotExist:
-                pass
 
-            try:
-                last_perspective_taking = user.exams.filter(type=Exam.Type.perspective_taking).last()
+            last_perspective_taking = user.exams.filter(type=Exam.Type.perspective_taking).last()
+            if last_perspective_taking:
                 perspective_taking_result = json.loads(last_perspective_taking.result)
                 speed_list.append(perspective_taking_result['speed'])
-            except Exam.DoesNotExist:
-                pass
 
         if speed_list:
             speed = mean(speed_list)

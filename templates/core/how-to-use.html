@@ -44,7 +44,7 @@
 {% block js %}
     <script>
         var nextPageUrl = '{% url 'exam:all-exams' %}';
-        var localStorageKey = 'show-how-to-use';
+        var localStorageKey = 'show-how-to-use-{{ user.username }}';
 
         if (localStorage.getItem(localStorageKey) === 'false') {
             window.location.href = nextPageUrl;
