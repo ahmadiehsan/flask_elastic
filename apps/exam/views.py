@@ -199,11 +199,11 @@ class ReportsView(LoginRequiredMixin, TemplateView):
         visual_memory_memory_span_list = []
         visual_memory_date_list = []
 
-        orientation_total_list = []
-        orientation_date_list = []
-
         working_memory_memory_span_list = []
         working_memory_date_list = []
+
+        perspective_taking_angle_list = []
+        perspective_taking_date_list = []
 
         speed_speed_list = []
         speed_date_list = []
@@ -220,12 +220,6 @@ class ReportsView(LoginRequiredMixin, TemplateView):
                 visual_memory_memory_span_list.append(visual_memory_result['memory_span'])
                 visual_memory_date_list.append(visual_memory.create_date_formatted)
 
-            for orientation in user.exams.filter(type=Exam.Type.orientation):
-                orientation_result = json.loads(orientation.result)
-
-                orientation_total_list.append(orientation_result['total'])
-                orientation_date_list.append(orientation.create_date_formatted)
-
             for working_memory in user.exams.filter(type=Exam.Type.working_memory):
                 working_memory_result = json.loads(working_memory.result)
 
@@ -241,6 +235,20 @@ class ReportsView(LoginRequiredMixin, TemplateView):
                 speed_speed_list.append(perspective_taking_result['speed'])
                 speed_date_list.append(perspective_taking.create_date_formatted)
 
+                perspective_taking_angle_list.append(perspective_taking_result['angle'])
+                perspective_taking_date_list.append(perspective_taking.create_date_formatted)
+
+        new_speed_speed_list = []
+        new_speed_date_list = []
+        for index, d in enumerate(speed_date_list):
+            if d in new_speed_date_list:
+                new_speed_speed_list[new_speed_date_list.index(d)] = self._average(
+                    [speed_speed_list[index], new_speed_speed_list[new_speed_date_list.index(d)]]
+                )
+            else:
+                new_speed_date_list.append(d)
+                new_speed_speed_list.append(speed_speed_list[index])
+
         return {
             'show': show,
             'data': {
@@ -248,17 +256,17 @@ class ReportsView(LoginRequiredMixin, TemplateView):
                     'memory_span_list': visual_memory_memory_span_list,
                     'date_list': visual_memory_date_list
                 },
-                'orientation': {
-                    'total_list': orientation_total_list,
-                    'date_list': orientation_date_list
-                },
                 'working_memory': {
                     'memory_span_list': working_memory_memory_span_list,
                     'date_list': working_memory_date_list
                 },
+                'perspective_taking': {
+                    'angle_list': perspective_taking_angle_list,
+                    'date_list': perspective_taking_date_list
+                },
                 'speed': {
-                    'speed_list': speed_speed_list,
-                    'date_list': speed_date_list
+                    'speed_list': new_speed_speed_list,
+                    'date_list': new_speed_date_list
                 },
             }
         }
@@ -370,6 +378,10 @@ class ReportsView(LoginRequiredMixin, TemplateView):
     @staticmethod
     def _percentage(part, whole):
         return 100 * (float(part) / float(whole))
+
+    @staticmethod
+    def _average(lst):
+        return sum(lst) / len(lst)
 
 
 class IframeView(LoginRequiredMixin, View):

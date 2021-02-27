@@ -34,7 +34,7 @@
                                 <canvas id="visual-memory-canvas" height="150"></canvas>
                             </div>
                             <div class="col-md-6">
-                                <canvas id="orientation-canvas" height="150"></canvas>
+                                <canvas id="perspective-taking-canvas" height="150"></canvas>
                             </div>
                         </div>
                         <div class="row">
@@ -150,6 +150,16 @@
                         max: 100,
                         min: 0
                     }
+                },
+                tooltips: {
+                    callbacks: {
+                        title: function (tooltipItem, data) {
+                            return data['labels'][tooltipItem[0]['index']];
+                        },
+                        label: function (tooltipItem, data) {
+                            return data['datasets'][0]['data'][tooltipItem['index']];
+                        }
+                    }
                 }
             }
         });
@@ -180,7 +190,7 @@
                 datasets: [
                     {
                         data: {{ detailed_progress.data.visual_memory.memory_span_list }},
-                        label: "visual memory",
+                        label: "Visual memory",
                         backgroundColor: 'rgba(248, 206, 0, 0.2)',
                         borderColor: 'rgb(248,206,0)',
                         fill: false
@@ -191,14 +201,14 @@
         });
 
         // orientation
-        new Chart(document.getElementById('orientation-canvas').getContext('2d'), {
+        new Chart(document.getElementById('perspective-taking-canvas').getContext('2d'), {
             type: 'line',
             data: {
-                labels: {{ detailed_progress.data.orientation.date_list|safe }},
+                labels: {{ detailed_progress.data.perspective_taking.date_list|safe }},
                 datasets: [
                     {
-                        data: {{ detailed_progress.data.orientation.total_list }},
-                        label: "orientation",
+                        data: {{ detailed_progress.data.perspective_taking.angle_list }},
+                        label: "Perspective taking",
                         backgroundColor: 'rgba(246, 115, 0, 0.2)',
                         borderColor: 'rgb(246,115,0)',
                         fill: false
@@ -216,7 +226,7 @@
                 datasets: [
                     {
                         data: {{ detailed_progress.data.working_memory.memory_span_list }},
-                        label: "working memory",
+                        label: "Working memory",
                         backgroundColor: 'rgba(94, 177, 0, 0.2)',
                         borderColor: 'rgb(94,177,0)',
                         fill: false
@@ -234,7 +244,7 @@
                 datasets: [
                     {
                         data: {{ detailed_progress.data.speed.speed_list }},
-                        label: "speed",
+                        label: "Speed",
                         backgroundColor: 'rgba(99, 133, 255, 0.2)',
                         borderColor: 'rgb(99,133,255)',
                         fill: false

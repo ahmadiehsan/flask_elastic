@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container">
+    <div class="all-exams container">
         <h3 class="text-center">Let's begin your brain test</h3>
         <hr>
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
@@ -22,10 +22,21 @@
                         <h5 class="card-title text-danger fw-bold">
                             1) Visual memory
                         </h5>
-                        <p class="card-text">
-                            Visual short-term memory (VSTM) is a short-term memory buffer that temporarily stores visual
-                            information (Phillips, 1974)
-                        </p>
+
+                        <div class="d-grid">
+                            <p class="card-text collapse" id="visual-memory-collapse">
+                                Visual short-term memory (VSTM) is a short-term memory buffer that temporarily stores
+                                visual information (Phillips, 1974)
+                            </p>
+                            <button
+                                    class="btn btn-sm btn-block mb-3"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#visual-memory-collapse"
+                            >
+                                + read more
+                            </button>
+                        </div>
+
                         <a
                                 href="{% url 'exam:iframe' link='https://keep-up.app/Game/index.html' %}"
                                 class="btn btn-danger"
@@ -45,12 +56,23 @@
                         <h5 class="card-title text-danger fw-bold">
                             2) Working memory
                         </h5>
-                        <p class="card-text">
-                            The working memory model theorized that as opposed to the simplistic functions of short-term
-                            memory in providing short-term storage of information, working memory is a multicomponent
-                            system that manipulates information storage for greater and more complex cognitive utility
-                            (Baddeley and Hitch, 1974; Baddeley, 1996, 2000b)
-                        </p>
+
+                        <div class="d-grid">
+                            <p class="card-text collapse" id="working-memory-collapse">
+                                The working memory model theorized that as opposed to the simplistic functions of
+                                short-term memory in providing short-term storage of information, working memory is a
+                                multicomponent system that manipulates information storage for greater and more complex
+                                cognitive utility (Baddeley and Hitch, 1974; Baddeley, 1996, 2000b)
+                            </p>
+                            <button
+                                    class="btn btn-sm btn-block mb-3"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#working-memory-collapse"
+                            >
+                                + read more
+                            </button>
+                        </div>
+
                         <a
                                 href="{% url 'exam:iframe' link='https://keep-up.app/Game/index.html' %}"
                                 class="btn btn-danger {% if not already_taken_visual_memory %}disabled{% endif %}"
@@ -70,7 +92,7 @@
                         <h5 class="card-title text-danger fw-bold">
                             3) Orientation
                         </h5>
-                        <p class="card-text">
+                        <p class="card-text mb-5 pb-4">
                             SOD is the hypothesized ability to find your way within environmental-scale spaces.
                         </p>
                         <a
@@ -92,15 +114,27 @@
                         <h5 class="card-title text-danger fw-bold">
                             4) Perspective taking
                         </h5>
-                        <p class="card-text">
-                            The ability to understand how your egocentric view of the world may differ from the
-                            traveler's spatial perspective on the world reflects a process known as spatial perspective
-                            taking (Furlanetto, Cavallo, Manera, Tversky, & Becchio, 2013; Kessler & Rutherford, 2010;
-                            Michelon & Zacks, 2006; Zwickel, 2009). Spatial perspective taking involves understanding
-                            how objects in the environment are oriented in relation to another (e.g. front back, left
-                            right), and is different than visual perspective taking which involves understanding what is
-                            in another’s line of sight (Surtees, Apperly, & Samson, 2013).
-                        </p>
+
+                        <div class="d-grid">
+                            <p class="card-text collapse" id="perspective-taking-collapse">
+                                The ability to understand how your egocentric view of the world may differ from the
+                                traveler's spatial perspective on the world reflects a process known as spatial
+                                perspective taking (Furlanetto, Cavallo, Manera, Tversky, & Becchio, 2013; Kessler &
+                                Rutherford, 2010; Michelon & Zacks, 2006; Zwickel, 2009). Spatial perspective taking
+                                involves understanding how objects in the environment are oriented in relation to
+                                another (e.g. front back, left right), and is different than visual perspective taking
+                                which involves understanding what is in another’s line of sight (Surtees, Apperly, &
+                                Samson, 2013).
+                            </p>
+                            <button
+                                    class="btn btn-sm btn-block mb-3"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#perspective-taking-collapse"
+                            >
+                                + read more
+                            </button>
+                        </div>
+
                         <a
                                 href="{% url 'exam:iframe' link='https://keep-up.app/Game/index.html' %}"
                                 class="btn btn-danger {% if not already_taken_orientation %}disabled{% endif %}"

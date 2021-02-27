@@ -14,6 +14,15 @@
     text-align: justify !important;
 }
 
+.all-exams .collapse {
+    display: block !important;
+}
+
+.all-exams .collapse:not(.show) {
+    height: 85px;
+    overflow: hidden;
+}
+
 /* LG */
 @media (min-width: 992px) {
     .main-navbar .nav-link {
