@@ -38,7 +38,7 @@
                         </div>
 
                         <a
-                                href="{% url 'exam:iframe' link='https://keep-up.app/Game/index.html' %}"
+                                href="{% url 'exam:iframe' link='/Tests/VisualMemory' %}"
                                 class="btn btn-danger"
                         >
                             Start Test
@@ -74,7 +74,7 @@
                         </div>
 
                         <a
-                                href="{% url 'exam:iframe' link='https://keep-up.app/Game/index.html' %}"
+                                href="{% url 'exam:iframe' link='/Tests/WorkingMemory' %}"
                                 class="btn btn-danger {% if not already_taken_visual_memory %}disabled{% endif %}"
                         >
                             Start Test
@@ -136,7 +136,7 @@
                         </div>
 
                         <a
-                                href="{% url 'exam:iframe' link='https://keep-up.app/Game/index.html' %}"
+                                href="{% url 'exam:iframe' link='/Tests/PerspectiveTaking' %}"
                                 class="btn btn-danger {% if not already_taken_orientation %}disabled{% endif %}"
                         >
                             Start Test
