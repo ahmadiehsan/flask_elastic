@@ -293,16 +293,16 @@ class ReportsView(LoginRequiredMixin, TemplateView):
                 accuracy_list.append(game_result['accuracy'])
                 speed_list.append(game_result['speed'])
 
-            best_score = max(coins_list)
-            accuracy = mean(accuracy_list)
-            best_speed = min(speed_list)
+            best_score = int(max(coins_list))
+            accuracy = int(mean(accuracy_list))
+            best_speed = int(min(speed_list))
 
         return {
             'show': show,
             'data': {
-                'best_score': int(best_score),
-                'accuracy': int(accuracy),
-                'best_speed': int(best_speed),
+                'best_score': best_score,
+                'accuracy': accuracy,
+                'best_speed': best_speed,
             }
         }
 
