@@ -184,10 +184,10 @@ class ReportsView(LoginRequiredMixin, TemplateView):
         return {
             'show': show,
             'data': {
-                'this_week_percentage': self._percentage(this_week_time, 40 * 60),
-                'last_week_percentage': self._percentage(last_week_time, 40 * 60),
-                'two_weeks_ago_percentage': self._percentage(two_weeks_ago_time, 40 * 60),
-                'three_weeks_ago_percentage': self._percentage(three_weeks_ago_time, 40 * 60),
+                'this_week_percentage': int(self._percentage(this_week_time, 40 * 60)),
+                'last_week_percentage': int(self._percentage(last_week_time, 40 * 60)),
+                'two_weeks_ago_percentage': int(self._percentage(two_weeks_ago_time, 40 * 60)),
+                'three_weeks_ago_percentage': int(self._percentage(three_weeks_ago_time, 40 * 60)),
             }
         }
 
@@ -214,28 +214,28 @@ class ReportsView(LoginRequiredMixin, TemplateView):
             for visual_memory in user.exams.filter(type=Exam.Type.visual_memory):
                 visual_memory_result = json.loads(visual_memory.result)
 
-                speed_speed_list.append(visual_memory_result['speed'])
+                speed_speed_list.append(int(visual_memory_result['speed']))
                 speed_date_list.append(visual_memory.create_date_formatted)
 
-                visual_memory_memory_span_list.append(visual_memory_result['memory_span'])
+                visual_memory_memory_span_list.append(int(visual_memory_result['memory_span']))
                 visual_memory_date_list.append(visual_memory.create_date_formatted)
 
             for working_memory in user.exams.filter(type=Exam.Type.working_memory):
                 working_memory_result = json.loads(working_memory.result)
 
-                speed_speed_list.append(working_memory_result['speed'])
+                speed_speed_list.append(int(working_memory_result['speed']))
                 speed_date_list.append(working_memory.create_date_formatted)
 
-                working_memory_memory_span_list.append(working_memory_result['memory_span'])
+                working_memory_memory_span_list.append(int(working_memory_result['memory_span']))
                 working_memory_date_list.append(working_memory.create_date_formatted)
 
             for perspective_taking in user.exams.filter(type=Exam.Type.perspective_taking):
                 perspective_taking_result = json.loads(perspective_taking.result)
 
-                speed_speed_list.append(perspective_taking_result['speed'])
+                speed_speed_list.append(int(perspective_taking_result['speed']))
                 speed_date_list.append(perspective_taking.create_date_formatted)
 
-                perspective_taking_angle_list.append(perspective_taking_result['angle'])
+                perspective_taking_angle_list.append(int(perspective_taking_result['angle']))
                 perspective_taking_date_list.append(perspective_taking.create_date_formatted)
 
         new_speed_speed_list = []
@@ -300,9 +300,9 @@ class ReportsView(LoginRequiredMixin, TemplateView):
         return {
             'show': show,
             'data': {
-                'best_score': best_score,
-                'accuracy': accuracy,
-                'best_speed': best_speed,
+                'best_score': int(best_score),
+                'accuracy': int(accuracy),
+                'best_speed': int(best_speed),
             }
         }
 
@@ -320,7 +320,7 @@ class ReportsView(LoginRequiredMixin, TemplateView):
 
             for game in game_history:
                 game_result = json.loads(game.result)
-                speed_list.append(game_result['speed'])
+                speed_list.append(int(game_result['speed']))
                 date_list.append(game.create_date_formatted)
 
         return {
@@ -367,11 +367,11 @@ class ReportsView(LoginRequiredMixin, TemplateView):
 
         return {
             'data': {
-                'visual_memory': self._percentage(visual_memory_result.get('memory_span', 0), 10),
-                'working_memory': self._percentage(working_memory_result.get('memory_span', 0), 10),
-                'orientation': self._percentage(orientation_result.get('total', 0), 105),
-                'perspective_taking': self._percentage(perspective_taking_result.get('angle', 0), 180),
-                'speed': self._percentage(speed, 1000),
+                'visual_memory': int(self._percentage(visual_memory_result.get('memory_span', 0), 10)),
+                'working_memory': int(self._percentage(working_memory_result.get('memory_span', 0), 10)),
+                'orientation': int(self._percentage(orientation_result.get('total', 0), 105)),
+                'perspective_taking': int(self._percentage(perspective_taking_result.get('angle', 0), 180)),
+                'speed': int(self._percentage(speed, 1000)),
             }
         }
 
