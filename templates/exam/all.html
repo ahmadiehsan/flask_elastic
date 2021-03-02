@@ -38,7 +38,7 @@
                         </div>
 
                         <a
-                                href="{% url 'exam:iframe' link='/Tests/VisualMemory' %}"
+                                href="{% url 'exam:iframe' link='http://keep-up.app/Unity/Tests/CorsiWebGL1/index.html' %}"
                                 class="btn btn-danger"
                         >
                             Start Test
@@ -74,7 +74,7 @@
                         </div>
 
                         <a
-                                href="{% url 'exam:iframe' link='/Tests/WorkingMemory' %}"
+                                href="{% url 'exam:iframe' link='https://keep-up.app/Unity/Tests/BackCorsiWebGL1/index.html' %}"
                                 class="btn btn-danger {% if not already_taken_visual_memory %}disabled{% endif %}"
                         >
                             Start Test
@@ -136,7 +136,7 @@
                         </div>
 
                         <a
-                                href="{% url 'exam:iframe' link='/Tests/PerspectiveTaking' %}"
+                                href="{% url 'exam:iframe' link='http://keep-up.app/Unity/Tests/PerspectiveWebGL1/index.html' %}"
                                 class="btn btn-danger {% if not already_taken_orientation %}disabled{% endif %}"
                         >
                             Start Test
