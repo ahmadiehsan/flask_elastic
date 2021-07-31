@@ -1,0 +1,19 @@
+# editor
+.idea
+.vscode
+
+# pycache files
+__pycache__
+**/__pycache__
+**/__pycache__/**
+*.pyc
+
+# other
+venv
+env
+*.db
+*.sqlite3
+media/*
+celerybeat*
+logs
+backup
